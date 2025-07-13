@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📲 QR Code Generator - Divine DevOps Suite</title>
+    <meta name="description" content="Create customizable QR codes for URLs, contact info, and more">
+    <meta name="keywords" content="qr code generator, qr codes, custom qr, contact qr">
+    <meta name="author" content="Divine DevOps">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../shared-styles.css">
+    <style>
+        .qr-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .qr-preview {
+            background: var(--card-light);
+            border: 2px dashed var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            gap: var(--spacing-lg);
+        }
+        
+        .dark-theme .qr-preview {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .qr-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .qr-type-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .qr-type-option {
+            padding: var(--spacing-sm);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .dark-theme .qr-type-option {
+            border-color: var(--border-dark);
+        }
+        
+        .qr-type-option:hover,
+        .qr-type-option.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .size-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .size-option {
+            padding: var(--spacing-sm);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+        
+        .dark-theme .size-option {
+            border-color: var(--border-dark);
+        }
+        
+        .size-option:hover,
+        .size-option.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .color-input-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .color-input {
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+        
+        .templates-section {
+            margin-top: var(--spacing-xl);
+        }
+        
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .template-card {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-theme .template-card {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .template-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .download-options {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .qr-builder {
+                grid-template-columns: 1fr;
+            }
+            
+            .qr-type-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">🌙</button>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../" class="navbar-brand">🦄 Divine DevOps Suite</a>
+            <div class="navbar-nav">
+                <a href="../">🏠 Home</a>
+                <a href="../#tools">🔧 Tools</a>
+                <a href="https://github.com/Divinedevops87/Divinedevops87">💻 GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📲 QR Code Generator</h1>
+            <p>Create customizable QR codes for URLs, contact information, and more</p>
+        </div>
+
+        <!-- QR Builder -->
+        <div class="qr-builder">
+            <!-- Controls -->
+            <div class="card">
+                <h2>🛠️ QR Code Settings</h2>
+                
+                <div class="form-group">
+                    <label>QR Code Type</label>
+                    <div class="qr-type-selector">
+                        <div class="qr-type-option selected" data-type="url">URL</div>
+                        <div class="qr-type-option" data-type="text">Text</div>
+                        <div class="qr-type-option" data-type="email">Email</div>
+                        <div class="qr-type-option" data-type="phone">Phone</div>
+                        <div class="qr-type-option" data-type="sms">SMS</div>
+                        <div class="qr-type-option" data-type="wifi">WiFi</div>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="content-input">
+                    <label for="qr-content" id="content-label">URL</label>
+                    <textarea id="qr-content" class="form-control" placeholder="https://github.com/Divinedevops87/Divinedevops87" rows="3"></textarea>
+                </div>
+                
+                <!-- Dynamic fields will be inserted here -->
+                <div id="dynamic-fields"></div>
+                
+                <div class="form-group">
+                    <label>Size</label>
+                    <div class="size-selector">
+                        <div class="size-option" data-size="128">128px</div>
+                        <div class="size-option selected" data-size="256">256px</div>
+                        <div class="size-option" data-size="512">512px</div>
+                        <div class="size-option" data-size="1024">1024px</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fg-color">Foreground Color</label>
+                    <div class="color-input-group">
+                        <input type="color" id="fg-color" class="color-input" value="#000000">
+                        <input type="text" id="fg-color-text" class="form-control" value="#000000" style="flex: 1;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bg-color">Background Color</label>
+                    <div class="color-input-group">
+                        <input type="color" id="bg-color" class="color-input" value="#ffffff">
+                        <input type="text" id="bg-color-text" class="form-control" value="#ffffff" style="flex: 1;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="error-correction">Error Correction</label>
+                    <select id="error-correction" class="form-control">
+                        <option value="L">Low (~7%)</option>
+                        <option value="M" selected>Medium (~15%)</option>
+                        <option value="Q">Quartile (~25%)</option>
+                        <option value="H">High (~30%)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Preview -->
+            <div class="card">
+                <h2>👀 Live Preview</h2>
+                <div class="qr-preview">
+                    <img id="qr-image" class="qr-image" src="" alt="QR Code" style="display: none;">
+                    <div id="qr-placeholder" style="text-align: center; opacity: 0.6;">
+                        Enter content to generate QR code
+                    </div>
+                </div>
+                
+                <div class="download-options">
+                    <button id="download-png" class="btn">📥 Download PNG</button>
+                    <button id="download-svg" class="btn btn-secondary">📄 Download SVG</button>
+                    <button id="copy-url" class="btn btn-outline">📋 Copy URL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates -->
+        <div class="card templates-section">
+            <h2>🎨 Quick Templates</h2>
+            <p>Click on any template to quickly fill in common QR code types</p>
+            
+            <div class="template-grid">
+                <div class="template-card" data-template="github-repo">
+                    <h3>📦 GitHub Repo</h3>
+                    <p>Link to GitHub repository</p>
+                </div>
+                
+                <div class="template-card" data-template="contact-card">
+                    <h3>👤 Contact Card</h3>
+                    <p>vCard contact information</p>
+                </div>
+                
+                <div class="template-card" data-template="wifi-share">
+                    <h3>📶 WiFi Share</h3>
+                    <p>Share WiFi credentials</p>
+                </div>
+                
+                <div class="template-card" data-template="email-me">
+                    <h3>📧 Email Me</h3>
+                    <p>Quick email contact</p>
+                </div>
+                
+                <div class="template-card" data-template="portfolio">
+                    <h3>🌐 Portfolio</h3>
+                    <p>Link to personal website</p>
+                </div>
+                
+                <div class="template-card" data-template="social-media">
+                    <h3>📱 Social Media</h3>
+                    <p>Link to social profiles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built with ❤️ by <a href="https://github.com/Divinedevops87">Divine DevOps</a> | 
+        <a href="../">🦄 Divine DevOps Suite</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../shared-utils.js"></script>
+    <script>
+        let currentType = 'url';
+        let currentSize = 256;
+        let currentFgColor = '#000000';
+        let currentBgColor = '#ffffff';
+        let currentErrorCorrection = 'M';
+        
+        // Event listeners
+        document.getElementById('qr-content').addEventListener('input', generateQR);
+        document.getElementById('fg-color').addEventListener('input', updateForegroundColor);
+        document.getElementById('fg-color-text').addEventListener('input', updateForegroundColorText);
+        document.getElementById('bg-color').addEventListener('input', updateBackgroundColor);
+        document.getElementById('bg-color-text').addEventListener('input', updateBackgroundColorText);
+        document.getElementById('error-correction').addEventListener('change', updateErrorCorrection);
+        
+        // Type selection
+        document.querySelectorAll('.qr-type-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.qr-type-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                currentType = option.dataset.type;
+                updateInputFields();
+                generateQR();
+            });
+        });
+        
+        // Size selection
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.size-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                currentSize = parseInt(option.dataset.size);
+                generateQR();
+            });
+        });
+        
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                applyTemplate(card.dataset.template);
+            });
+        });
+        
+        // Download buttons
+        document.getElementById('download-png').addEventListener('click', downloadPNG);
+        document.getElementById('download-svg').addEventListener('click', downloadSVG);
+        document.getElementById('copy-url').addEventListener('click', copyQRUrl);
+        
+        function updateInputFields() {
+            const contentLabel = document.getElementById('content-label');
+            const contentInput = document.getElementById('qr-content');
+            const dynamicFields = document.getElementById('dynamic-fields');
+            
+            // Clear dynamic fields
+            dynamicFields.innerHTML = '';
+            
+            switch (currentType) {
+                case 'url':
+                    contentLabel.textContent = 'URL';
+                    contentInput.placeholder = 'https://github.com/Divinedevops87/Divinedevops87';
+                    break;
+                    
+                case 'text':
+                    contentLabel.textContent = 'Text Content';
+                    contentInput.placeholder = 'Enter any text content here...';
+                    break;
+                    
+                case 'email':
+                    contentLabel.textContent = 'Email Address';
+                    contentInput.placeholder = 'your-email@example.com';
+                    dynamicFields.innerHTML = `
+                        <div class="form-group">
+                            <label for="email-subject">Subject (optional)</label>
+                            <input type="text" id="email-subject" class="form-control" placeholder="Email subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="email-body">Body (optional)</label>
+                            <textarea id="email-body" class="form-control" placeholder="Email body"></textarea>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'phone':
+                    contentLabel.textContent = 'Phone Number';
+                    contentInput.placeholder = '+1234567890';
+                    break;
+                    
+                case 'sms':
+                    contentLabel.textContent = 'Phone Number';
+                    contentInput.placeholder = '+1234567890';
+                    dynamicFields.innerHTML = `
+                        <div class="form-group">
+                            <label for="sms-message">Message</label>
+                            <textarea id="sms-message" class="form-control" placeholder="Pre-filled SMS message"></textarea>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'wifi':
+                    contentLabel.textContent = 'Network Name (SSID)';
+                    contentInput.placeholder = 'My-WiFi-Network';
+                    dynamicFields.innerHTML = `
+                        <div class="form-group">
+                            <label for="wifi-password">Password</label>
+                            <input type="text" id="wifi-password" class="form-control" placeholder="WiFi password">
+                        </div>
+                        <div class="form-group">
+                            <label for="wifi-security">Security Type</label>
+                            <select id="wifi-security" class="form-control">
+                                <option value="WPA">WPA/WPA2</option>
+                                <option value="WEP">WEP</option>
+                                <option value="">None (Open)</option>
+                            </select>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            // Add event listeners to new fields
+            dynamicFields.querySelectorAll('input, textarea, select').forEach(field => {
+                field.addEventListener('input', generateQR);
+                field.addEventListener('change', generateQR);
+            });
+        }
+        
+        function generateQRContent() {
+            const content = document.getElementById('qr-content').value.trim();
+            
+            switch (currentType) {
+                case 'url':
+                    return content.startsWith('http') ? content : `https://${content}`;
+                    
+                case 'text':
+                    return content;
+                    
+                case 'email':
+                    const subject = document.getElementById('email-subject')?.value || '';
+                    const body = document.getElementById('email-body')?.value || '';
+                    let mailto = `mailto:${content}`;
+                    const params = [];
+                    if (subject) params.push(`subject=${encodeURIComponent(subject)}`);
+                    if (body) params.push(`body=${encodeURIComponent(body)}`);
+                    if (params.length > 0) mailto += `?${params.join('&')}`;
+                    return mailto;
+                    
+                case 'phone':
+                    return `tel:${content}`;
+                    
+                case 'sms':
+                    const message = document.getElementById('sms-message')?.value || '';
+                    return `sms:${content}${message ? `?body=${encodeURIComponent(message)}` : ''}`;
+                    
+                case 'wifi':
+                    const password = document.getElementById('wifi-password')?.value || '';
+                    const security = document.getElementById('wifi-security')?.value || '';
+                    return `WIFI:T:${security};S:${content};P:${password};;`;
+                    
+                default:
+                    return content;
+            }
+        }
+        
+        function generateQR() {
+            const content = generateQRContent();
+            if (!content) {
+                document.getElementById('qr-image').style.display = 'none';
+                document.getElementById('qr-placeholder').style.display = 'block';
+                return;
+            }
+            
+            // Using QR Server API for demonstration
+            // In production, you might want to use a client-side QR library
+            const fgColor = currentFgColor.substring(1); // Remove #
+            const bgColor = currentBgColor.substring(1); // Remove #
+            
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${currentSize}x${currentSize}&data=${encodeURIComponent(content)}&color=${fgColor}&bgcolor=${bgColor}&ecc=${currentErrorCorrection}`;
+            
+            const qrImage = document.getElementById('qr-image');
+            qrImage.src = qrUrl;
+            qrImage.style.display = 'block';
+            document.getElementById('qr-placeholder').style.display = 'none';
+        }
+        
+        function updateForegroundColor() {
+            currentFgColor = document.getElementById('fg-color').value;
+            document.getElementById('fg-color-text').value = currentFgColor;
+            generateQR();
+        }
+        
+        function updateForegroundColorText() {
+            const color = document.getElementById('fg-color-text').value;
+            if (/^#[0-9A-F]{6}$/i.test(color)) {
+                currentFgColor = color;
+                document.getElementById('fg-color').value = color;
+                generateQR();
+            }
+        }
+        
+        function updateBackgroundColor() {
+            currentBgColor = document.getElementById('bg-color').value;
+            document.getElementById('bg-color-text').value = currentBgColor;
+            generateQR();
+        }
+        
+        function updateBackgroundColorText() {
+            const color = document.getElementById('bg-color-text').value;
+            if (/^#[0-9A-F]{6}$/i.test(color)) {
+                currentBgColor = color;
+                document.getElementById('bg-color').value = color;
+                generateQR();
+            }
+        }
+        
+        function updateErrorCorrection() {
+            currentErrorCorrection = document.getElementById('error-correction').value;
+            generateQR();
+        }
+        
+        function downloadPNG() {
+            const qrImage = document.getElementById('qr-image');
+            if (qrImage.src) {
+                const link = document.createElement('a');
+                link.href = qrImage.src;
+                link.download = `qr-code-${currentSize}x${currentSize}.png`;
+                link.click();
+                showAlert('PNG downloaded successfully!', 'success');
+            }
+        }
+        
+        function downloadSVG() {
+            // For SVG download, we would need a different API or generate SVG client-side
+            showAlert('SVG download coming soon! Use PNG for now.', 'info');
+        }
+        
+        function copyQRUrl() {
+            const qrImage = document.getElementById('qr-image');
+            if (qrImage.src) {
+                copyToClipboard(qrImage.src);
+            }
+        }
+        
+        function applyTemplate(templateType) {
+            const templates = {
+                'github-repo': {
+                    type: 'url',
+                    content: 'https://github.com/Divinedevops87/Divinedevops87'
+                },
+                'contact-card': {
+                    type: 'text',
+                    content: 'BEGIN:VCARD\nVERSION:3.0\nFN:Divine DevOps\nORG:Divine DevOps\nURL:https://github.com/Divinedevops87\nEMAIL:your-email@example.com\nEND:VCARD'
+                },
+                'wifi-share': {
+                    type: 'wifi',
+                    content: 'My-WiFi-Network'
+                },
+                'email-me': {
+                    type: 'email',
+                    content: 'your-email@example.com'
+                },
+                'portfolio': {
+                    type: 'url',
+                    content: 'https://divinedevops87.github.io'
+                },
+                'social-media': {
+                    type: 'url',
+                    content: 'https://github.com/Divinedevops87'
+                }
+            };
+            
+            const template = templates[templateType];
+            if (template) {
+                // Update type
+                document.querySelectorAll('.qr-type-option').forEach(o => o.classList.remove('selected'));
+                document.querySelector(`[data-type="${template.type}"]`).classList.add('selected');
+                currentType = template.type;
+                
+                updateInputFields();
+                
+                // Set content
+                document.getElementById('qr-content').value = template.content;
+                
+                generateQR();
+                showAlert(`Applied ${templateType.replace('-', ' ')} template!`, 'success');
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateInputFields();
+        });
+    </script>
+</body>
+</html>

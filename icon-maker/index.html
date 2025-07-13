@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 App Icon Maker - Divine DevOps Suite</title>
+    <meta name="description" content="Generate beautiful app icons in multiple formats (SVG, PNG, ICO) with custom styles">
+    <meta name="keywords" content="icon maker, app icons, svg generator, png icons, favicon generator">
+    <meta name="author" content="Divine DevOps">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../shared-styles.css">
+    <style>
+        .icon-designer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .icon-preview {
+            background: var(--card-light);
+            border: 2px dashed var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            position: relative;
+        }
+        
+        .dark-theme .icon-preview {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .icon-canvas {
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .size-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .size-option {
+            padding: var(--spacing-sm);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .dark-theme .size-option {
+            border-color: var(--border-dark);
+        }
+        
+        .size-option:hover,
+        .size-option.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .shape-selector {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .shape-option {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .dark-theme .shape-option {
+            border-color: var(--border-dark);
+        }
+        
+        .shape-option.circle {
+            border-radius: 50%;
+        }
+        
+        .shape-option.rounded {
+            border-radius: var(--radius-lg);
+        }
+        
+        .shape-option.square {
+            border-radius: var(--radius-sm);
+        }
+        
+        .shape-option:hover,
+        .shape-option.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .color-input-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .color-input {
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+        
+        .download-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .format-card {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .dark-theme .format-card {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .format-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .batch-download {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+        }
+        
+        @media (max-width: 768px) {
+            .icon-designer {
+                grid-template-columns: 1fr;
+            }
+            
+            .shape-selector {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">🌙</button>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../" class="navbar-brand">🦄 Divine DevOps Suite</a>
+            <div class="navbar-nav">
+                <a href="../">🏠 Home</a>
+                <a href="../#tools">🔧 Tools</a>
+                <a href="https://github.com/Divinedevops87/Divinedevops87">💻 GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎨 App Icon Maker</h1>
+            <p>Generate beautiful app icons in multiple formats with custom styles and colors</p>
+        </div>
+
+        <!-- Icon Designer -->
+        <div class="icon-designer">
+            <!-- Controls -->
+            <div class="card">
+                <h2>🛠️ Design Controls</h2>
+                
+                <div class="form-group">
+                    <label for="icon-text">Icon Text/Emoji</label>
+                    <input type="text" id="icon-text" class="form-control" placeholder="🦄 or Text" maxlength="10">
+                </div>
+                
+                <div class="form-group">
+                    <label>Shape Style</label>
+                    <div class="shape-selector">
+                        <div class="shape-option circle selected" data-shape="circle" title="Circle">
+                            ⭕
+                        </div>
+                        <div class="shape-option rounded" data-shape="rounded" title="Rounded Square">
+                            ⬜
+                        </div>
+                        <div class="shape-option square" data-shape="square" title="Square">
+                            ⬛
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bg-color">Background Color</label>
+                    <div class="color-input-group">
+                        <input type="color" id="bg-color" class="color-input" value="#667eea">
+                        <input type="text" id="bg-color-text" class="form-control" value="#667eea" style="flex: 1;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="text-color">Text Color</label>
+                    <div class="color-input-group">
+                        <input type="color" id="text-color" class="color-input" value="#ffffff">
+                        <input type="text" id="text-color-text" class="form-control" value="#ffffff" style="flex: 1;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Icon Size</label>
+                    <div class="size-selector">
+                        <div class="size-option" data-size="64">64px</div>
+                        <div class="size-option" data-size="128">128px</div>
+                        <div class="size-option selected" data-size="256">256px</div>
+                        <div class="size-option" data-size="512">512px</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="custom-size">Custom Size</label>
+                    <input type="number" id="custom-size" class="form-control" min="16" max="1024" placeholder="Custom size">
+                </div>
+                
+                <div class="form-group">
+                    <label for="font-size">Font Size (%)</label>
+                    <input type="range" id="font-size" class="form-control" min="20" max="80" value="50">
+                    <span id="font-size-value">50%</span>
+                </div>
+            </div>
+            
+            <!-- Preview -->
+            <div class="card">
+                <h2>👀 Live Preview</h2>
+                <div class="icon-preview">
+                    <canvas id="icon-canvas" width="256" height="256" class="icon-canvas"></canvas>
+                </div>
+                <div style="text-align: center; margin-top: var(--spacing-md);">
+                    <span id="preview-info">256x256 px</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="card">
+            <h2>📥 Download Options</h2>
+            <div class="download-section">
+                <div class="format-card">
+                    <div class="format-icon">📄</div>
+                    <h3>SVG Format</h3>
+                    <p>Scalable vector graphics - perfect for web</p>
+                    <button id="download-svg" class="btn">Download SVG</button>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">🖼️</div>
+                    <h3>PNG Format</h3>
+                    <p>High-quality raster image</p>
+                    <button id="download-png" class="btn">Download PNG</button>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">💾</div>
+                    <h3>ICO Format</h3>
+                    <p>Windows icon format</p>
+                    <button id="download-ico" class="btn">Download ICO</button>
+                </div>
+            </div>
+            
+            <div class="batch-download">
+                <h3>📦 Batch Download</h3>
+                <p>Download all common sizes in PNG format</p>
+                <button id="download-all" class="btn btn-secondary">Download All Sizes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built with ❤️ by <a href="https://github.com/Divinedevops87">Divine DevOps</a> | 
+        <a href="../">🦄 Divine DevOps Suite</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../shared-utils.js"></script>
+    <script>
+        let currentSize = 256;
+        let currentShape = 'circle';
+        let currentBgColor = '#667eea';
+        let currentTextColor = '#ffffff';
+        let currentText = '🦄';
+        let currentFontSize = 50;
+        
+        const canvas = document.getElementById('icon-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Event listeners
+        document.getElementById('icon-text').addEventListener('input', updateIcon);
+        document.getElementById('bg-color').addEventListener('input', updateBackgroundColor);
+        document.getElementById('bg-color-text').addEventListener('input', updateBackgroundColorText);
+        document.getElementById('text-color').addEventListener('input', updateTextColor);
+        document.getElementById('text-color-text').addEventListener('input', updateTextColorText);
+        document.getElementById('custom-size').addEventListener('input', updateCustomSize);
+        document.getElementById('font-size').addEventListener('input', updateFontSize);
+        
+        // Shape selection
+        document.querySelectorAll('.shape-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.shape-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                currentShape = option.dataset.shape;
+                updateIcon();
+            });
+        });
+        
+        // Size selection
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.size-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                currentSize = parseInt(option.dataset.size);
+                updateCanvasSize();
+                updateIcon();
+            });
+        });
+        
+        // Download buttons
+        document.getElementById('download-svg').addEventListener('click', downloadSVG);
+        document.getElementById('download-png').addEventListener('click', downloadPNG);
+        document.getElementById('download-ico').addEventListener('click', downloadICO);
+        document.getElementById('download-all').addEventListener('click', downloadAll);
+        
+        function updateIcon() {
+            currentText = document.getElementById('icon-text').value || '🦄';
+            drawIcon();
+        }
+        
+        function updateBackgroundColor() {
+            currentBgColor = document.getElementById('bg-color').value;
+            document.getElementById('bg-color-text').value = currentBgColor;
+            updateIcon();
+        }
+        
+        function updateBackgroundColorText() {
+            const color = document.getElementById('bg-color-text').value;
+            if (/^#[0-9A-F]{6}$/i.test(color)) {
+                currentBgColor = color;
+                document.getElementById('bg-color').value = color;
+                updateIcon();
+            }
+        }
+        
+        function updateTextColor() {
+            currentTextColor = document.getElementById('text-color').value;
+            document.getElementById('text-color-text').value = currentTextColor;
+            updateIcon();
+        }
+        
+        function updateTextColorText() {
+            const color = document.getElementById('text-color-text').value;
+            if (/^#[0-9A-F]{6}$/i.test(color)) {
+                currentTextColor = color;
+                document.getElementById('text-color').value = color;
+                updateIcon();
+            }
+        }
+        
+        function updateCustomSize() {
+            const size = parseInt(document.getElementById('custom-size').value);
+            if (size >= 16 && size <= 1024) {
+                document.querySelectorAll('.size-option').forEach(o => o.classList.remove('selected'));
+                currentSize = size;
+                updateCanvasSize();
+                updateIcon();
+            }
+        }
+        
+        function updateFontSize() {
+            currentFontSize = parseInt(document.getElementById('font-size').value);
+            document.getElementById('font-size-value').textContent = currentFontSize + '%';
+            updateIcon();
+        }
+        
+        function updateCanvasSize() {
+            canvas.width = currentSize;
+            canvas.height = currentSize;
+            document.getElementById('preview-info').textContent = `${currentSize}x${currentSize} px`;
+        }
+        
+        function drawIcon() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw background shape
+            ctx.fillStyle = currentBgColor;
+            ctx.beginPath();
+            
+            if (currentShape === 'circle') {
+                ctx.arc(currentSize / 2, currentSize / 2, currentSize / 2, 0, 2 * Math.PI);
+            } else if (currentShape === 'rounded') {
+                const radius = currentSize * 0.1;
+                drawRoundedRect(ctx, 0, 0, currentSize, currentSize, radius);
+            } else {
+                ctx.rect(0, 0, currentSize, currentSize);
+            }
+            
+            ctx.fill();
+            
+            // Draw text/emoji
+            ctx.fillStyle = currentTextColor;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Calculate font size
+            const fontSize = (currentSize * currentFontSize) / 100;
+            ctx.font = `${fontSize}px Arial, sans-serif`;
+            
+            ctx.fillText(currentText, currentSize / 2, currentSize / 2);
+        }
+        
+        function drawRoundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+        
+        function generateSVG() {
+            let shapeElement;
+            
+            if (currentShape === 'circle') {
+                shapeElement = `<circle cx="${currentSize/2}" cy="${currentSize/2}" r="${currentSize/2}" fill="${currentBgColor}"/>`;
+            } else if (currentShape === 'rounded') {
+                const radius = currentSize * 0.1;
+                shapeElement = `<rect width="${currentSize}" height="${currentSize}" fill="${currentBgColor}" rx="${radius}"/>`;
+            } else {
+                shapeElement = `<rect width="${currentSize}" height="${currentSize}" fill="${currentBgColor}"/>`;
+            }
+            
+            const fontSize = (currentSize * currentFontSize) / 100;
+            
+            return `<svg width="${currentSize}" height="${currentSize}" xmlns="http://www.w3.org/2000/svg">
+                ${shapeElement}
+                <text x="50%" y="50%" text-anchor="middle" dy="0.35em" font-size="${fontSize}" fill="${currentTextColor}" font-family="Arial, sans-serif">
+                    ${currentText}
+                </text>
+            </svg>`;
+        }
+        
+        function downloadSVG() {
+            const svgContent = generateSVG();
+            downloadFile(svgContent, `icon-${currentSize}x${currentSize}.svg`, 'image/svg+xml');
+        }
+        
+        function downloadPNG() {
+            downloadCanvas(canvas, `icon-${currentSize}x${currentSize}.png`);
+        }
+        
+        function downloadICO() {
+            // For ICO, we'll use PNG format as ICO generation is complex
+            // In a real implementation, you'd use a library like ico-convert
+            downloadCanvas(canvas, `icon-${currentSize}x${currentSize}.ico`);
+            showAlert('ICO format downloaded as PNG (use online converter for true ICO)', 'info');
+        }
+        
+        function downloadAll() {
+            const sizes = [16, 32, 64, 128, 256, 512];
+            const originalSize = currentSize;
+            
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    currentSize = size;
+                    updateCanvasSize();
+                    drawIcon();
+                    downloadCanvas(canvas, `icon-${size}x${size}.png`);
+                    
+                    if (index === sizes.length - 1) {
+                        // Restore original size
+                        currentSize = originalSize;
+                        updateCanvasSize();
+                        drawIcon();
+                        showAlert('All sizes downloaded successfully!', 'success');
+                    }
+                }, index * 100);
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateIcon();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏷️ GitHub Badges Customizer - Divine DevOps Suite</title>
+    <meta name="description" content="Create custom GitHub badges with live preview and templates">
+    <meta name="keywords" content="github badges, shields.io, badge maker, custom badges">
+    <meta name="author" content="Divine DevOps">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../shared-styles.css">
+    <style>
+        .badge-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .badge-preview {
+            background: var(--card-light);
+            border: 2px dashed var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            gap: var(--spacing-lg);
+        }
+        
+        .dark-theme .badge-preview {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .preview-badge img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .style-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .style-option {
+            padding: var(--spacing-sm);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .dark-theme .style-option {
+            border-color: var(--border-dark);
+        }
+        
+        .style-option:hover,
+        .style-option.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .color-option {
+            padding: var(--spacing-sm);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dark-theme .color-option {
+            border-color: var(--border-dark);
+        }
+        
+        .color-option:hover,
+        .color-option.selected {
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+        
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .template-card {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-theme .template-card {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .template-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .template-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .template-badges img {
+            max-height: 20px;
+        }
+        
+        .code-output {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .dark-theme .code-output {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .output-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tab-button {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--border-light);
+            background: var(--card-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-theme .tab-button {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .tab-button.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .badge-builder {
+                grid-template-columns: 1fr;
+            }
+            
+            .style-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">🌙</button>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../" class="navbar-brand">🦄 Divine DevOps Suite</a>
+            <div class="navbar-nav">
+                <a href="../">🏠 Home</a>
+                <a href="../#tools">🔧 Tools</a>
+                <a href="https://github.com/Divinedevops87/Divinedevops87">💻 GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🏷️ GitHub Badges Customizer</h1>
+            <p>Create custom shields.io badges with live preview and easy integration</p>
+        </div>
+
+        <!-- Badge Builder -->
+        <div class="badge-builder">
+            <!-- Controls -->
+            <div class="card">
+                <h2>🛠️ Badge Designer</h2>
+                
+                <div class="form-group">
+                    <label for="badge-label">Label</label>
+                    <input type="text" id="badge-label" class="form-control" placeholder="Build" value="Build">
+                </div>
+                
+                <div class="form-group">
+                    <label for="badge-message">Message</label>
+                    <input type="text" id="badge-message" class="form-control" placeholder="Passing" value="Passing">
+                </div>
+                
+                <div class="form-group">
+                    <label>Badge Style</label>
+                    <div class="style-selector">
+                        <div class="style-option selected" data-style="flat">Flat</div>
+                        <div class="style-option" data-style="plastic">Plastic</div>
+                        <div class="style-option" data-style="flat-square">Flat Square</div>
+                        <div class="style-option" data-style="for-the-badge">For Badge</div>
+                        <div class="style-option" data-style="social">Social</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Color</label>
+                    <div class="color-grid">
+                        <div class="color-option selected" data-color="brightgreen" style="background-color: #4c1;">brightgreen</div>
+                        <div class="color-option" data-color="green" style="background-color: #97CA00;">green</div>
+                        <div class="color-option" data-color="yellowgreen" style="background-color: #a4a61d;">yellowgreen</div>
+                        <div class="color-option" data-color="yellow" style="background-color: #dfb317;">yellow</div>
+                        <div class="color-option" data-color="orange" style="background-color: #fe7d37;">orange</div>
+                        <div class="color-option" data-color="red" style="background-color: #e05d44;">red</div>
+                        <div class="color-option" data-color="lightgrey" style="background-color: #9f9f9f;">lightgrey</div>
+                        <div class="color-option" data-color="blue" style="background-color: #007ec6;">blue</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="custom-color">Custom Color (hex)</label>
+                    <input type="text" id="custom-color" class="form-control" placeholder="#FF6B6B">
+                </div>
+                
+                <div class="form-group">
+                    <label for="badge-logo">Logo (Simple Icons name)</label>
+                    <input type="text" id="badge-logo" class="form-control" placeholder="github">
+                </div>
+                
+                <div class="form-group">
+                    <label for="logo-color">Logo Color</label>
+                    <input type="text" id="logo-color" class="form-control" placeholder="white">
+                </div>
+            </div>
+            
+            <!-- Preview -->
+            <div class="card">
+                <h2>👀 Live Preview</h2>
+                <div class="badge-preview">
+                    <div class="preview-badge">
+                        <img id="badge-image" src="" alt="Badge Preview" style="display: none;">
+                    </div>
+                    <div style="text-align: center; opacity: 0.7;">
+                        <small>Preview updates automatically</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Output -->
+        <div class="card">
+            <h2>📋 Generated Code</h2>
+            <div class="output-tabs">
+                <button class="tab-button active" data-tab="markdown">Markdown</button>
+                <button class="tab-button" data-tab="html">HTML</button>
+                <button class="tab-button" data-tab="url">URL</button>
+                <button class="tab-button" data-tab="rst">RST</button>
+            </div>
+            
+            <div class="code-output" id="code-output"></div>
+            
+            <div style="text-align: center; margin-top: var(--spacing-md);">
+                <button id="copy-code" class="btn">📋 Copy Code</button>
+                <button id="open-badge" class="btn btn-secondary">🔗 Open in New Tab</button>
+            </div>
+        </div>
+
+        <!-- Templates -->
+        <div class="card">
+            <h2>🎨 Badge Templates</h2>
+            <p>Click on any template to apply a set of related badges</p>
+            
+            <div class="template-grid">
+                <div class="template-card" data-template="build">
+                    <h3>🔨 Build Status</h3>
+                    <p>CI/CD pipeline and build status badges</p>
+                    <div class="template-badges">
+                        <img src="https://img.shields.io/badge/Build-Passing-brightgreen" alt="Build Passing">
+                        <img src="https://img.shields.io/badge/Tests-Passing-brightgreen" alt="Tests Passing">
+                        <img src="https://img.shields.io/badge/Coverage-90%25-brightgreen" alt="Coverage 90%">
+                    </div>
+                </div>
+                
+                <div class="template-card" data-template="version">
+                    <h3>📦 Version Info</h3>
+                    <p>Version, release, and package information</p>
+                    <div class="template-badges">
+                        <img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="Version 1.0.0">
+                        <img src="https://img.shields.io/badge/Release-Latest-blue" alt="Release Latest">
+                        <img src="https://img.shields.io/badge/NPM-Published-red" alt="NPM Published">
+                    </div>
+                </div>
+                
+                <div class="template-card" data-template="license">
+                    <h3>📄 License</h3>
+                    <p>Open source license badges</p>
+                    <div class="template-badges">
+                        <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License MIT">
+                        <img src="https://img.shields.io/badge/License-Apache%202.0-blue" alt="License Apache 2.0">
+                        <img src="https://img.shields.io/badge/License-GPL%20v3-blue" alt="License GPL v3">
+                    </div>
+                </div>
+                
+                <div class="template-card" data-template="social">
+                    <h3>👥 Social</h3>
+                    <p>GitHub stars, forks, and social metrics</p>
+                    <div class="template-badges">
+                        <img src="https://img.shields.io/badge/Stars-⭐-yellow" alt="Stars">
+                        <img src="https://img.shields.io/badge/Forks-🍴-blue" alt="Forks">
+                        <img src="https://img.shields.io/badge/Contributors-👥-orange" alt="Contributors">
+                    </div>
+                </div>
+                
+                <div class="template-card" data-template="tech">
+                    <h3>⚡ Technology</h3>
+                    <p>Programming languages and frameworks</p>
+                    <div class="template-badges">
+                        <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript">
+                        <img src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black" alt="React">
+                        <img src="https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white" alt="Node.js">
+                    </div>
+                </div>
+                
+                <div class="template-card" data-template="quality">
+                    <h3>🎯 Code Quality</h3>
+                    <p>Code quality and analysis badges</p>
+                    <div class="template-badges">
+                        <img src="https://img.shields.io/badge/Quality-A+-brightgreen" alt="Quality A+">
+                        <img src="https://img.shields.io/badge/Maintainability-A-green" alt="Maintainability A">
+                        <img src="https://img.shields.io/badge/Security-A-blue" alt="Security A">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built with ❤️ by <a href="https://github.com/Divinedevops87">Divine DevOps</a> | 
+        <a href="../">🦄 Divine DevOps Suite</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../shared-utils.js"></script>
+    <script>
+        let currentBadge = {
+            label: 'Build',
+            message: 'Passing',
+            color: 'brightgreen',
+            style: 'flat',
+            logo: '',
+            logoColor: ''
+        };
+        
+        let currentTab = 'markdown';
+        
+        // Event listeners
+        document.getElementById('badge-label').addEventListener('input', updateBadge);
+        document.getElementById('badge-message').addEventListener('input', updateBadge);
+        document.getElementById('custom-color').addEventListener('input', updateCustomColor);
+        document.getElementById('badge-logo').addEventListener('input', updateBadge);
+        document.getElementById('logo-color').addEventListener('input', updateBadge);
+        
+        // Style selection
+        document.querySelectorAll('.style-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.style-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                currentBadge.style = option.dataset.style;
+                updatePreview();
+                updateCode();
+            });
+        });
+        
+        // Color selection
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                currentBadge.color = option.dataset.color;
+                document.getElementById('custom-color').value = '';
+                updatePreview();
+                updateCode();
+            });
+        });
+        
+        // Tab selection
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                button.classList.add('active');
+                currentTab = button.dataset.tab;
+                updateCode();
+            });
+        });
+        
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                applyTemplate(card.dataset.template);
+            });
+        });
+        
+        // Action buttons
+        document.getElementById('copy-code').addEventListener('click', copyCode);
+        document.getElementById('open-badge').addEventListener('click', openBadge);
+        
+        function updateBadge() {
+            currentBadge.label = document.getElementById('badge-label').value || 'Label';
+            currentBadge.message = document.getElementById('badge-message').value || 'Message';
+            currentBadge.logo = document.getElementById('badge-logo').value;
+            currentBadge.logoColor = document.getElementById('logo-color').value;
+            updatePreview();
+            updateCode();
+        }
+        
+        function updateCustomColor() {
+            const customColor = document.getElementById('custom-color').value.trim();
+            if (customColor) {
+                if (customColor.startsWith('#') && /^#[0-9A-F]{6}$/i.test(customColor)) {
+                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                    currentBadge.color = customColor.substring(1);
+                    updatePreview();
+                    updateCode();
+                } else if (/^[0-9A-F]{6}$/i.test(customColor)) {
+                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                    currentBadge.color = customColor;
+                    updatePreview();
+                    updateCode();
+                }
+            }
+        }
+        
+        function generateBadgeUrl() {
+            const { label, message, color, style, logo, logoColor } = currentBadge;
+            let url = `https://img.shields.io/badge/${encodeURIComponent(label)}-${encodeURIComponent(message)}-${color}`;
+            
+            if (style && style !== 'flat') {
+                url += `?style=${style}`;
+            }
+            
+            if (logo) {
+                const separator = url.includes('?') ? '&' : '?';
+                url += `${separator}logo=${encodeURIComponent(logo)}`;
+                
+                if (logoColor) {
+                    url += `&logoColor=${encodeURIComponent(logoColor)}`;
+                }
+            }
+            
+            return url;
+        }
+        
+        function updatePreview() {
+            const badgeUrl = generateBadgeUrl();
+            const badgeImage = document.getElementById('badge-image');
+            badgeImage.src = badgeUrl;
+            badgeImage.style.display = 'block';
+            badgeImage.alt = `${currentBadge.label}: ${currentBadge.message}`;
+        }
+        
+        function updateCode() {
+            const badgeUrl = generateBadgeUrl();
+            const { label, message } = currentBadge;
+            const altText = `${label}: ${message}`;
+            
+            let code = '';
+            
+            switch (currentTab) {
+                case 'markdown':
+                    code = `![${altText}](${badgeUrl})`;
+                    break;
+                case 'html':
+                    code = `<img src="${badgeUrl}" alt="${altText}">`;
+                    break;
+                case 'url':
+                    code = badgeUrl;
+                    break;
+                case 'rst':
+                    code = `.. image:: ${badgeUrl}\n   :alt: ${altText}`;
+                    break;
+            }
+            
+            document.getElementById('code-output').textContent = code;
+        }
+        
+        function copyCode() {
+            const code = document.getElementById('code-output').textContent;
+            copyToClipboard(code);
+        }
+        
+        function openBadge() {
+            const badgeUrl = generateBadgeUrl();
+            window.open(badgeUrl, '_blank');
+        }
+        
+        function applyTemplate(templateType) {
+            const templates = {
+                build: [
+                    { label: 'Build', message: 'Passing', color: 'brightgreen' },
+                    { label: 'Tests', message: 'Passing', color: 'brightgreen' },
+                    { label: 'Coverage', message: '90%', color: 'brightgreen' }
+                ],
+                version: [
+                    { label: 'Version', message: '1.0.0', color: 'blue' },
+                    { label: 'Release', message: 'Latest', color: 'blue' },
+                    { label: 'NPM', message: 'Published', color: 'red' }
+                ],
+                license: [
+                    { label: 'License', message: 'MIT', color: 'yellow' },
+                    { label: 'License', message: 'Apache 2.0', color: 'blue' },
+                    { label: 'License', message: 'GPL v3', color: 'blue' }
+                ],
+                social: [
+                    { label: 'Stars', message: '⭐', color: 'yellow' },
+                    { label: 'Forks', message: '🍴', color: 'blue' },
+                    { label: 'Contributors', message: '👥', color: 'orange' }
+                ],
+                tech: [
+                    { label: 'JavaScript', message: '', color: 'F7DF1E', logo: 'javascript', logoColor: 'black' },
+                    { label: 'React', message: '', color: '61DAFB', logo: 'react', logoColor: 'black' },
+                    { label: 'Node.js', message: '', color: '339933', logo: 'node.js', logoColor: 'white' }
+                ],
+                quality: [
+                    { label: 'Quality', message: 'A+', color: 'brightgreen' },
+                    { label: 'Maintainability', message: 'A', color: 'green' },
+                    { label: 'Security', message: 'A', color: 'blue' }
+                ]
+            };
+            
+            const template = templates[templateType];
+            if (template && template.length > 0) {
+                const firstBadge = template[0];
+                
+                document.getElementById('badge-label').value = firstBadge.label;
+                document.getElementById('badge-message').value = firstBadge.message || '';
+                document.getElementById('badge-logo').value = firstBadge.logo || '';
+                document.getElementById('logo-color').value = firstBadge.logoColor || '';
+                
+                currentBadge = { ...currentBadge, ...firstBadge };
+                
+                // Update color selection
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                const colorOption = document.querySelector(`[data-color="${firstBadge.color}"]`);
+                if (colorOption) {
+                    colorOption.classList.add('selected');
+                } else {
+                    document.getElementById('custom-color').value = '#' + firstBadge.color;
+                }
+                
+                updatePreview();
+                updateCode();
+                
+                showAlert(`Applied ${templateType} template! Use the form to create related badges.`, 'success');
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePreview();
+            updateCode();
+        });
+    </script>
+</body>
+</html>
