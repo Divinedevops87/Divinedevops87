@@ -1,0 +1,119 @@
+{
+  "version": 2,
+  "name": "divine-devops-lowcode-suite",
+  "builds": [
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.jpg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.ico",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/readme-generator",
+      "dest": "/readme-generator/index.html"
+    },
+    {
+      "src": "/icon-maker",
+      "dest": "/icon-maker/index.html"
+    },
+    {
+      "src": "/badge-maker",
+      "dest": "/badge-maker/index.html"
+    },
+    {
+      "src": "/markdown-editor",
+      "dest": "/markdown-editor/index.html"
+    },
+    {
+      "src": "/social-card-maker",
+      "dest": "/social-card-maker/index.html"
+    },
+    {
+      "src": "/qr-generator",
+      "dest": "/qr-generator/index.html"
+    },
+    {
+      "src": "/project-templates",
+      "dest": "/project-templates/index.html"
+    },
+    {
+      "src": "/license-generator",
+      "dest": "/license-generator/index.html"
+    },
+    {
+      "src": "/github-templates",
+      "dest": "/github-templates/index.html"
+    },
+    {
+      "src": "/contributor-stats",
+      "dest": "/contributor-stats/index.html"
+    },
+    {
+      "src": "/tech-icons",
+      "dest": "/tech-icons/index.html"
+    },
+    {
+      "src": "/code-formatter",
+      "dest": "/code-formatter/index.html"
+    },
+    {
+      "src": "/banner-maker",
+      "dest": "/banner-maker/index.html"
+    },
+    {
+      "src": "/github-stats",
+      "dest": "/github-stats/index.html"
+    },
+    {
+      "src": "/deploy-buttons",
+      "dest": "/deploy-buttons/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+}

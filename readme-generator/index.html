@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 README Generator - Divine DevOps Suite</title>
+    <meta name="description" content="Professional README.md generator with templates, badges, and live preview">
+    <meta name="keywords" content="readme generator, markdown, documentation, github, badges">
+    <meta name="author" content="Divine DevOps">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="README Generator - Divine DevOps Suite">
+    <meta property="og:description" content="Create professional README files with templates and live preview">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://divinedevops87.github.io/readme-generator/">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../shared-styles.css">
+    <style>
+        .template-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .template-card {
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .dark-theme .template-card {
+            border-color: var(--border-dark);
+        }
+        
+        .template-card:hover,
+        .template-card.selected {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .preview-section {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            max-height: 600px;
+            overflow-y: auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', monospace;
+        }
+        
+        .dark-theme .preview-section {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .badge-builder {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        .badge-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-top: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .form-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">🌙</button>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../" class="navbar-brand">🦄 Divine DevOps Suite</a>
+            <div class="navbar-nav">
+                <a href="../">🏠 Home</a>
+                <a href="../#tools">🔧 Tools</a>
+                <a href="https://github.com/Divinedevops87/Divinedevops87">💻 GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📝 README Generator</h1>
+            <p>Create professional README.md files with templates, badges, and live preview</p>
+        </div>
+
+        <!-- Template Selector -->
+        <div class="card">
+            <h2>🎨 Choose a Template</h2>
+            <div class="template-selector">
+                <div class="template-card" data-template="basic">
+                    <h3>📄 Basic</h3>
+                    <p>Simple and clean structure</p>
+                </div>
+                <div class="template-card" data-template="detailed">
+                    <h3>📋 Detailed</h3>
+                    <p>Comprehensive documentation</p>
+                </div>
+                <div class="template-card" data-template="minimal">
+                    <h3>✨ Minimal</h3>
+                    <p>Clean and focused</p>
+                </div>
+                <div class="template-card" data-template="professional">
+                    <h3>💼 Professional</h3>
+                    <p>Business-ready format</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form and Preview -->
+        <div class="form-section">
+            <!-- Form Section -->
+            <div class="card">
+                <h2>📝 Project Information</h2>
+                <form id="readme-form">
+                    <div class="form-group">
+                        <label for="project-name">Project Name *</label>
+                        <input type="text" id="project-name" name="projectName" class="form-control" placeholder="My Awesome Project" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description *</label>
+                        <textarea id="description" name="description" class="form-control" placeholder="A brief description of your project" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="github-username">GitHub Username</label>
+                        <input type="text" id="github-username" name="githubUsername" class="form-control" placeholder="yourusername">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="repo-name">Repository Name</label>
+                        <input type="text" id="repo-name" name="repoName" class="form-control" placeholder="your-repo-name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="installation">Installation Instructions</label>
+                        <textarea id="installation" name="installation" class="form-control" placeholder="npm install your-package"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="usage">Usage Examples</label>
+                        <textarea id="usage" name="usage" class="form-control" placeholder="How to use your project"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="license">License</label>
+                        <select id="license" name="license" class="form-control">
+                            <option value="MIT">MIT</option>
+                            <option value="Apache-2.0">Apache 2.0</option>
+                            <option value="GPL-3.0">GPL 3.0</option>
+                            <option value="BSD-3-Clause">BSD 3-Clause</option>
+                            <option value="ISC">ISC</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="technologies">Technologies Used (comma-separated)</label>
+                        <input type="text" id="technologies" name="technologies" class="form-control" placeholder="JavaScript, React, Node.js">
+                    </div>
+                </form>
+                
+                <!-- Badge Builder -->
+                <h3>🏷️ Badges</h3>
+                <div class="badge-builder">
+                    <input type="text" id="badge-label" placeholder="Label" class="form-control" style="flex: 1;">
+                    <input type="text" id="badge-message" placeholder="Message" class="form-control" style="flex: 1;">
+                    <select id="badge-color" class="form-control" style="flex: 1;">
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="red">Red</option>
+                        <option value="orange">Orange</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="brightgreen">Bright Green</option>
+                        <option value="success">Success</option>
+                        <option value="important">Important</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                    <button type="button" id="add-badge" class="btn">Add Badge</button>
+                </div>
+                <div class="badge-preview" id="badge-preview"></div>
+            </div>
+            
+            <!-- Preview Section -->
+            <div class="card">
+                <h2>👀 Live Preview</h2>
+                <div class="preview-section" id="preview-content">
+                    <p style="text-align: center; opacity: 0.6;">Select a template and fill in the form to see the preview</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button id="copy-readme" class="btn btn-secondary">📋 Copy to Clipboard</button>
+            <button id="download-readme" class="btn">📥 Download README.md</button>
+            <button id="reset-form" class="btn btn-outline">🔄 Reset Form</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built with ❤️ by <a href="https://github.com/Divinedevops87">Divine DevOps</a> | 
+        <a href="../">🦄 Divine DevOps Suite</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../shared-utils.js"></script>
+    <script>
+        let currentTemplate = 'basic';
+        let customBadges = [];
+        
+        const templates = {
+            basic: {
+                name: 'Basic',
+                content: `# {{projectName}}
+
+{{description}}
+
+## 📋 Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+
+## 🚀 Installation
+
+\`\`\`bash
+{{installation}}
+\`\`\`
+
+## 💻 Usage
+
+{{usage}}
+
+## 📄 License
+
+This project is licensed under the {{license}} License.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📞 Contact
+
+{{githubUsername}} - [@{{githubUsername}}](https://github.com/{{githubUsername}})
+
+Project Link: [https://github.com/{{githubUsername}}/{{repoName}}](https://github.com/{{githubUsername}}/{{repoName}})`
+            },
+            
+            detailed: {
+                name: 'Detailed',
+                content: `# {{projectName}}
+
+<div align="center">
+
+{{badges}}
+
+{{description}}
+
+[Demo](https://{{githubUsername}}.github.io/{{repoName}}) | [Documentation](docs/) | [Report Bug](../../issues) | [Request Feature](../../issues)
+
+</div>
+
+## 📋 Table of Contents
+
+- [About The Project](#about-the-project)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
+
+## 🎯 About The Project
+
+{{description}}
+
+### 🛠️ Built With
+
+{{techStack}}
+
+## 🚀 Getting Started
+
+To get a local copy up and running follow these simple steps.
+
+### 📋 Prerequisites
+
+List of prerequisites and how to install them:
+
+\`\`\`bash
+npm install npm@latest -g
+\`\`\`
+
+### ⚙️ Installation
+
+1. Clone the repo
+   \`\`\`bash
+   git clone https://github.com/{{githubUsername}}/{{repoName}}.git
+   \`\`\`
+
+2. Install packages
+   \`\`\`bash
+   {{installation}}
+   \`\`\`
+
+## 💻 Usage
+
+{{usage}}
+
+For more examples, please refer to the [Documentation](docs/)
+
+## 🗺️ Roadmap
+
+- [x] Initial Release
+- [ ] Add Feature 1
+- [ ] Add Feature 2
+- [ ] Multi-language Support
+
+See the [open issues](../../issues) for a full list of proposed features.
+
+## 🤝 Contributing
+
+Contributions make the open source community amazing! Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (\`git checkout -b feature/AmazingFeature\`)
+3. Commit your Changes (\`git commit -m 'Add some AmazingFeature'\`)
+4. Push to the Branch (\`git push origin feature/AmazingFeature\`)
+5. Open a Pull Request
+
+## 📄 License
+
+Distributed under the {{license}} License. See \`LICENSE\` for more information.
+
+## 📞 Contact
+
+{{githubUsername}} - [@{{githubUsername}}](https://github.com/{{githubUsername}})
+
+Project Link: [https://github.com/{{githubUsername}}/{{repoName}}](https://github.com/{{githubUsername}}/{{repoName}})
+
+## 🙏 Acknowledgments
+
+* [Choose an Open Source License](https://choosealicense.com)
+* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
+* [Shields.io](https://shields.io)
+* [GitHub Pages](https://pages.github.com)`
+            },
+            
+            minimal: {
+                name: 'Minimal',
+                content: `# {{projectName}}
+
+> {{description}}
+
+{{badges}}
+
+## Install
+
+\`\`\`bash
+{{installation}}
+\`\`\`
+
+## Usage
+
+{{usage}}
+
+## License
+
+{{license}} © [{{githubUsername}}](https://github.com/{{githubUsername}})`
+            },
+            
+            professional: {
+                name: 'Professional',
+                content: `<div align="center">
+
+# {{projectName}}
+
+### {{description}}
+
+{{badges}}
+
+[View Demo](https://{{githubUsername}}.github.io/{{repoName}}) · 
+[Report Bug](../../issues) · 
+[Request Feature](../../issues)
+
+</div>
+
+---
+
+## 🌟 Overview
+
+{{description}}
+
+## ✨ Key Features
+
+- 🚀 Feature 1
+- 💡 Feature 2
+- 🔧 Feature 3
+- 📱 Responsive Design
+- 🌙 Dark Mode Support
+
+## 🛠️ Technology Stack
+
+{{techStack}}
+
+## 📦 Installation
+
+### Quick Start
+
+\`\`\`bash
+# Clone the repository
+git clone https://github.com/{{githubUsername}}/{{repoName}}.git
+
+# Navigate to project directory
+cd {{repoName}}
+
+# Install dependencies
+{{installation}}
+\`\`\`
+
+### System Requirements
+
+- Node.js 14.0 or higher
+- npm 6.0 or higher
+
+## 🚀 Usage
+
+{{usage}}
+
+### Configuration
+
+Configure the application by modifying the \`config.json\` file:
+
+\`\`\`json
+{
+  "apiUrl": "https://api.example.com",
+  "theme": "light"
+}
+\`\`\`
+
+## 📊 Project Status
+
+- ✅ Core functionality complete
+- ✅ Tests passing
+- ✅ Documentation up to date
+- 🚧 Performance optimizations in progress
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Ensure all tests pass
+6. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the {{license}} License - see the [LICENSE](LICENSE) file for details.
+
+## 🙋‍♂️ Support
+
+For support, please:
+
+- 📧 Email: support@example.com
+- 💬 Join our [Discord](https://discord.gg/example)
+- 🐛 Report issues on [GitHub](../../issues)
+
+## 👨‍💻 Author
+
+**{{githubUsername}}**
+
+- GitHub: [@{{githubUsername}}](https://github.com/{{githubUsername}})
+- LinkedIn: [Connect with me](https://linkedin.com/in/{{githubUsername}})
+
+---
+
+<div align="center">
+
+Made with ❤️ by [{{githubUsername}}](https://github.com/{{githubUsername}})
+
+If you found this project helpful, please ⭐ star the repository!
+
+</div>`
+            }
+        };
+        
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                currentTemplate = card.dataset.template;
+                updatePreview();
+            });
+        });
+        
+        // Form change detection
+        document.getElementById('readme-form').addEventListener('input', updatePreview);
+        document.getElementById('readme-form').addEventListener('change', updatePreview);
+        
+        // Badge functionality
+        document.getElementById('add-badge').addEventListener('click', addBadge);
+        
+        // Action buttons
+        document.getElementById('copy-readme').addEventListener('click', copyReadme);
+        document.getElementById('download-readme').addEventListener('click', downloadReadme);
+        document.getElementById('reset-form').addEventListener('click', resetForm);
+        
+        function addBadge() {
+            const label = document.getElementById('badge-label').value.trim();
+            const message = document.getElementById('badge-message').value.trim();
+            const color = document.getElementById('badge-color').value;
+            
+            if (label && message) {
+                const badge = { label, message, color };
+                customBadges.push(badge);
+                renderBadges();
+                updatePreview();
+                
+                // Clear inputs
+                document.getElementById('badge-label').value = '';
+                document.getElementById('badge-message').value = '';
+            } else {
+                showAlert('Please enter both label and message for the badge', 'error');
+            }
+        }
+        
+        function renderBadges() {
+            const container = document.getElementById('badge-preview');
+            container.innerHTML = '';
+            
+            customBadges.forEach((badge, index) => {
+                const badgeElement = document.createElement('div');
+                badgeElement.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 4px;';
+                badgeElement.innerHTML = `
+                    <img src="${generateShieldsBadge(badge.label, badge.message, badge.color)}" alt="${badge.label}: ${badge.message}">
+                    <button onclick="removeBadge(${index})" class="btn btn-outline" style="padding: 2px 6px; font-size: 0.8rem;">✕</button>
+                `;
+                container.appendChild(badgeElement);
+            });
+        }
+        
+        function removeBadge(index) {
+            customBadges.splice(index, 1);
+            renderBadges();
+            updatePreview();
+        }
+        
+        function updatePreview() {
+            const formData = getFormData('readme-form');
+            const template = templates[currentTemplate];
+            
+            if (!template) return;
+            
+            // Generate badges markdown
+            let badgesMarkdown = '';
+            
+            // Add standard badges if GitHub info is provided
+            if (formData.githubUsername && formData.repoName) {
+                badgesMarkdown += `![GitHub stars](https://img.shields.io/github/stars/${formData.githubUsername}/${formData.repoName}?style=social)\n`;
+                badgesMarkdown += `![GitHub forks](https://img.shields.io/github/forks/${formData.githubUsername}/${formData.repoName}?style=social)\n`;
+                badgesMarkdown += `![GitHub license](https://img.shields.io/github/license/${formData.githubUsername}/${formData.repoName})\n`;
+            }
+            
+            // Add custom badges
+            customBadges.forEach(badge => {
+                badgesMarkdown += `![${badge.label}](${generateShieldsBadge(badge.label, badge.message, badge.color)})\n`;
+            });
+            
+            // Generate tech stack
+            let techStack = '';
+            if (formData.technologies) {
+                const techs = formData.technologies.split(',').map(tech => tech.trim());
+                techStack = techs.map(tech => `- ${tech}`).join('\n');
+            }
+            
+            // Interpolate template
+            const readmeContent = interpolateTemplate(template.content, {
+                ...formData,
+                badges: badgesMarkdown.trim(),
+                techStack: techStack
+            });
+            
+            // Render preview
+            const previewContainer = document.getElementById('preview-content');
+            previewContainer.innerHTML = `<pre style="white-space: pre-wrap; font-family: monospace; font-size: 0.9rem;">${readmeContent}</pre>`;
+        }
+        
+        function copyReadme() {
+            const previewContent = document.getElementById('preview-content');
+            const readmeText = previewContent.querySelector('pre').textContent;
+            copyToClipboard(readmeText);
+        }
+        
+        function downloadReadme() {
+            const previewContent = document.getElementById('preview-content');
+            const readmeText = previewContent.querySelector('pre').textContent;
+            const formData = getFormData('readme-form');
+            const filename = `${slugify(formData.projectName || 'README')}.md`;
+            downloadFile(readmeText, filename, 'text/markdown');
+        }
+        
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form? All entered data will be lost.')) {
+                document.getElementById('readme-form').reset();
+                customBadges = [];
+                renderBadges();
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                currentTemplate = 'basic';
+                document.querySelector('[data-template="basic"]').classList.add('selected');
+                updatePreview();
+                showAlert('Form has been reset', 'success');
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('[data-template="basic"]').classList.add('selected');
+            updatePreview();
+        });
+        
+        // Make removeBadge globally accessible
+        window.removeBadge = removeBadge;
+    </script>
+</body>
+</html>

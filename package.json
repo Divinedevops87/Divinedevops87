@@ -1,0 +1,47 @@
+{
+  "name": "divine-devops-lowcode-suite",
+  "version": "1.0.0",
+  "description": "Ultimate Low/No-Code Development Suite - 15+ Professional Tools for Developers",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 3000",
+    "build": "echo 'Static site - no build required'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "lowcode",
+    "nocode",
+    "development-tools",
+    "readme-generator",
+    "badge-maker",
+    "icon-generator",
+    "markdown-editor",
+    "devops",
+    "github-tools",
+    "web-tools"
+  ],
+  "author": "Divine DevOps (@Divinedevops87)",
+  "license": "MIT",
+  "homepage": "https://github.com/Divinedevops87/Divinedevops87",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Divinedevops87/Divinedevops87.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Divinedevops87/Divinedevops87/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "browserslist": [
+    "defaults",
+    "not ie < 11",
+    "last 2 versions",
+    "> 1%",
+    "iOS 7",
+    "last 3 iOS versions"
+  ]
+}

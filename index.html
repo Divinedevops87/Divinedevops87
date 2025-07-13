@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦄 Divine DevOps - Ultimate Low/No-Code Development Suite</title>
+    <meta name="description" content="15+ Professional low/no-code development tools including README generator, icon maker, badge customizer, and more">
+    <meta name="keywords" content="lowcode, nocode, development tools, readme generator, badge maker, icon generator, devops">
+    <meta name="author" content="Divine DevOps">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Divine DevOps - Ultimate Low/No-Code Development Suite">
+    <meta property="og:description" content="15+ Professional development tools for creating READMEs, icons, badges, and more">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://divinedevops87.github.io/Divinedevops87/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🦄</text></svg>">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="shared-styles.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: var(--spacing-xxl) 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-bottom: var(--spacing-xxl);
+            border-radius: var(--radius-xl);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .hero-btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .hero-btn-primary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .hero-btn-primary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .tool-card {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark-theme .tool-card {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+        
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
+        }
+        
+        .tool-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tool-description {
+            opacity: 0.8;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        .stats-section {
+            background: var(--card-light);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xxl);
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .dark-theme .stats-section {
+            background: var(--card-dark);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+        
+        .stat-label {
+            font-weight: 600;
+            opacity: 0.8;
+            margin-top: var(--spacing-sm);
+        }
+        
+        .deploy-section {
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .deploy-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            margin-top: var(--spacing-xl);
+        }
+        
+        .deploy-btn {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .deploy-vercel {
+            background: #000;
+            color: white;
+        }
+        
+        .deploy-netlify {
+            background: #00c7b7;
+            color: white;
+        }
+        
+        .deploy-heroku {
+            background: #430098;
+            color: white;
+        }
+        
+        .deploy-railway {
+            background: #0b0d0e;
+            color: white;
+        }
+        
+        .deploy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .about-section {
+            background: var(--card-light);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xxl);
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .dark-theme .about-section {
+            background: var(--card-dark);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            padding: var(--spacing-md);
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .social-link:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">🌙</button>
+    
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>🦄 Divine DevOps Suite</h1>
+            <p>The Ultimate Low/No-Code Development Toolkit - 15+ Professional Tools for Modern Developers</p>
+            <div class="hero-buttons">
+                <a href="#tools" class="hero-btn hero-btn-primary">🚀 Explore Tools</a>
+                <a href="https://github.com/Divinedevops87/Divinedevops87" class="hero-btn hero-btn-primary">⭐ Star on GitHub</a>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <h2>✨ Empowering Developers Worldwide</h2>
+            <p>Professional-grade tools designed for efficiency and creativity</p>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <div class="stat-label">Development Tools</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <div class="stat-label">Free & Open Source</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <div class="stat-label">Possibilities</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">💜</span>
+                    <div class="stat-label">Made with Love</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Grid -->
+        <section id="tools">
+            <div class="header">
+                <h2>🛠️ Professional Development Tools</h2>
+                <p>Everything you need to create, design, and deploy amazing projects</p>
+            </div>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <span class="tool-icon">📝</span>
+                    <h3 class="tool-title">README Generator</h3>
+                    <p class="tool-description">Create professional README files with templates, badges, and live preview</p>
+                    <a href="readme-generator/" class="btn">🚀 Create README</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">🎨</span>
+                    <h3 class="tool-title">App Icon Maker</h3>
+                    <p class="tool-description">Generate beautiful app icons in multiple formats (SVG, PNG, ICO)</p>
+                    <a href="icon-maker/" class="btn">🎨 Make Icons</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">🏷️</span>
+                    <h3 class="tool-title">Badge Customizer</h3>
+                    <p class="tool-description">Create custom GitHub badges with live preview and templates</p>
+                    <a href="badge-maker/" class="btn">🏷️ Create Badges</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">✍️</span>
+                    <h3 class="tool-title">Markdown Editor</h3>
+                    <p class="tool-description">Real-time markdown editor with syntax highlighting and themes</p>
+                    <a href="markdown-editor/" class="btn">✍️ Edit Markdown</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">📱</span>
+                    <h3 class="tool-title">Social Card Maker</h3>
+                    <p class="tool-description">Generate Open Graph images for social media sharing</p>
+                    <a href="social-card-maker/" class="btn">📱 Create Cards</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">📲</span>
+                    <h3 class="tool-title">QR Code Generator</h3>
+                    <p class="tool-description">Create customizable QR codes for repos and contact information</p>
+                    <a href="qr-generator/" class="btn">📲 Generate QR</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">🏗️</span>
+                    <h3 class="tool-title">Project Templates</h3>
+                    <p class="tool-description">Scaffold new projects with popular tech stack templates</p>
+                    <a href="project-templates/" class="btn">🏗️ Start Project</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">📄</span>
+                    <h3 class="tool-title">License Generator</h3>
+                    <p class="tool-description">Choose and generate LICENSE files with detailed explanations</p>
+                    <a href="license-generator/" class="btn">📄 Pick License</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">📋</span>
+                    <h3 class="tool-title">GitHub Templates</h3>
+                    <p class="tool-description">Create custom issue and pull request templates</p>
+                    <a href="github-templates/" class="btn">📋 Make Templates</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">📊</span>
+                    <h3 class="tool-title">Contributor Stats</h3>
+                    <p class="tool-description">Generate contributor charts and activity visualizations</p>
+                    <a href="contributor-stats/" class="btn">📊 View Stats</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">⚡</span>
+                    <h3 class="tool-title">Tech Stack Icons</h3>
+                    <p class="tool-description">Browse and select development tools and language icons</p>
+                    <a href="tech-icons/" class="btn">⚡ Browse Icons</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">💻</span>
+                    <h3 class="tool-title">Code Formatter</h3>
+                    <p class="tool-description">Create styled code blocks for documentation</p>
+                    <a href="code-formatter/" class="btn">💻 Format Code</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">🎬</span>
+                    <h3 class="tool-title">Banner Creator</h3>
+                    <p class="tool-description">Design animated GIF/SVG banners for README flair</p>
+                    <a href="banner-maker/" class="btn">🎬 Create Banner</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">📈</span>
+                    <h3 class="tool-title">GitHub Stats</h3>
+                    <p class="tool-description">Visualize profile statistics and activity dashboard</p>
+                    <a href="github-stats/" class="btn">📈 View Stats</a>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-icon">🚀</span>
+                    <h3 class="tool-title">Deploy Buttons</h3>
+                    <p class="tool-description">Generate one-click deploy buttons for multiple platforms</p>
+                    <a href="deploy-buttons/" class="btn">🚀 Deploy Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deploy Section -->
+        <section class="deploy-section">
+            <h2>🚀 One-Click Deploy</h2>
+            <p>Deploy this entire suite to your favorite platform instantly</p>
+            <div class="deploy-buttons">
+                <a href="https://vercel.com/new/clone?repository-url=https://github.com/Divinedevops87/Divinedevops87" class="deploy-btn deploy-vercel">
+                    ▲ Deploy to Vercel
+                </a>
+                <a href="https://app.netlify.com/start/deploy?repository=https://github.com/Divinedevops87/Divinedevops87" class="deploy-btn deploy-netlify">
+                    🌐 Deploy to Netlify
+                </a>
+                <a href="https://heroku.com/deploy?template=https://github.com/Divinedevops87/Divinedevops87" class="deploy-btn deploy-heroku">
+                    🟣 Deploy to Heroku
+                </a>
+                <a href="https://railway.app/new/template?template=https://github.com/Divinedevops87/Divinedevops87" class="deploy-btn deploy-railway">
+                    🚂 Deploy to Railway
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <h2>👩‍💻 About Divine DevOps</h2>
+            <p>Child of God 🙏 | Mother of 6 Amazing Children 👨‍👩‍👧‍👦 | Recovered Alcoholic in Recovery 💪 | Passionate Developer 💻</p>
+            <p>I'm passionate about coding, learning, and creating tools that empower other developers. This suite represents my journey in tech and my commitment to making development accessible to everyone.</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/Divinedevops87" class="social-link" title="GitHub">
+                    💻
+                </a>
+                <a href="mailto:your-email@example.com" class="social-link" title="Email">
+                    📧
+                </a>
+                <a href="https://www.buymeacoffee.com/divinedevops87" class="social-link" title="Buy Me a Coffee">
+                    ☕
+                </a>
+                <a href="https://linkedin.com/in/divinedevops87" class="social-link" title="LinkedIn">
+                    💼
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            Built with ❤️ by <a href="https://github.com/Divinedevops87">Divine DevOps</a> | 
+            <a href="LICENSE">MIT License</a> | 
+            <a href="https://github.com/Divinedevops87/Divinedevops87/issues">Report Issues</a>
+        </p>
+        <p style="margin-top: 8px; font-size: 0.9rem; opacity: 0.7;">
+            Last updated: <span id="last-updated"></span> | 
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=Divinedevops87.Divinedevops87" alt="Visitors">
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="shared-utils.js"></script>
+    <script>
+        // Update last updated timestamp
+        document.getElementById('last-updated').textContent = new Date().toLocaleDateString();
+        
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Tool card animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all tool cards for animation
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
