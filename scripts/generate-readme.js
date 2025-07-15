@@ -103,7 +103,7 @@ class DynamicReadmeGenerator {
     return skills.map(skill => `
       <div style="margin: 10px 0;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-          <span style="font-weight: bold; color: #333;">${skill.name}</span>
+          <span style="font-weight: bold; color: #333;">${skill.icon || '🔥'} ${skill.name}</span>
           <span style="color: #666;">${skill.level}%</span>
         </div>
         <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
@@ -197,21 +197,46 @@ class DynamicReadmeGenerator {
     `;
   }
 
+  // Load configuration
+  loadConfig() {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const configPath = path.join(process.cwd(), 'config.json');
+      
+      if (fs.existsSync(configPath)) {
+        const configData = fs.readFileSync(configPath, 'utf8');
+        return JSON.parse(configData);
+      }
+    } catch (error) {
+      console.warn('⚠️ Could not load config.json, using defaults');
+    }
+    
+    return {
+      profile: { username: this.username },
+      skills: [],
+      features: { enableActivityHeatmap: true }
+    };
+  }
+
   // Generate the complete README content
   async generateReadme() {
     console.log('🎨 Starting README generation...');
     
+    const config = this.loadConfig();
     const { user, repos } = await this.fetchUserData();
     const currentEmoji = this.getCurrentEmoji();
     const timeBasedGreeting = this.getTimeBasedGreeting();
     
-    const skills = [
-      { name: 'Android Development', level: 85 },
-      { name: 'JavaScript', level: 90 },
-      { name: 'Node.js', level: 80 },
-      { name: 'DevOps', level: 75 },
-      { name: 'Faith & Spirituality', level: 100 }
+    const skills = config.skills.length > 0 ? config.skills : [
+      { name: 'Android Development', level: 85, icon: '📱' },
+      { name: 'JavaScript', level: 90, icon: '⚡' },
+      { name: 'Node.js', level: 80, icon: '🟢' },
+      { name: 'DevOps', level: 75, icon: '🔧' },
+      { name: 'Faith & Spirituality', level: 100, icon: '🙏' }
     ];
+
+    const profile = config.profile || {};
 
     const readmeContent = `<!-- This README is auto-generated -->
 <div align="center">
@@ -317,7 +342,7 @@ Last updated: **${this.currentTime.format('dddd, MMMM Do YYYY [at] h:mm:ss a')}*
 
 ---
 
-<img src="https://github.com/Divinedevops87/Divinedevops87/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
+<img src="https://github.com/Divinedevops87/Divinedevops87/raw/main/assets/github-contribution-grid-snake.svg" alt="Snake animation" />
 
 *✨ This README is automatically updated every day with fresh content and animations! ✨*
 

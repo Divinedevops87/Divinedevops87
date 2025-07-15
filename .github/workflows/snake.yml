@@ -1,0 +1,35 @@
+name: 🐍 Generate Snake Animation
+
+on:
+  schedule:
+    # Run daily at 6:30 AM UTC (30 minutes after main workflow)
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-snake:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Generate snake animation
+      uses: Platane/snk@v3
+      with:
+        github_user_name: ${{ github.repository_owner }}
+        outputs: |
+          assets/github-contribution-grid-snake.svg
+          assets/github-contribution-grid-snake-dark.svg?palette=github-dark
+          assets/github-contribution-grid-snake.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
+          
+    - name: 🚀 Commit snake animation
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add assets/github-contribution-grid-snake*
+        git diff --staged --quiet || git commit -m "🐍 Update snake animation"
+        git push

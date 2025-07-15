@@ -129,8 +129,11 @@
         &#160;
         <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.8000000000000003s" fill="freeze"/>
       </tspan><tspan opacity="0" fill="#4ECDC4">
-        ⭐
+        �
         <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.9000000000000004s" fill="freeze"/>
+      </tspan><tspan opacity="0" fill="#4ECDC4">
+        �
+        <animate attributeName="opacity" values="0;1" dur="0.1s" begin="4s" fill="freeze"/>
       </tspan>
         </text>
         <rect x="0" y="0" width="800" height="60" fill="none" stroke="url(#textGradient)" stroke-width="2" opacity="0.3" rx="10">
@@ -153,11 +156,11 @@
 
 <img align="right" alt="Coding" width="400" src="https://raw.githubusercontent.com/abhisheknaiidu/abhisheknaiidu/master/code.gif">
 
-- 👋 **Good afternoon! ☀️** I'm @Divinedevops87 ⭐
+- 👋 **Good afternoon! ☀️** I'm @Divinedevops87 🚀
 - 👀 I'm passionate about **Coding & Yeshua** 👌🙏✨😍
 - 🌱 Currently diving deep into **Android Development** 📱
 - 💞️ Looking to **LEARN & EXPLORE** new technologies 🤩
-- 📫 **Reach me:** [Email](mailto:your-email@example.com) ⭐
+- 📫 **Reach me:** [Email](mailto:your-email@example.com) 🌞
 - 😄 **Pronouns:** CHILD OF GOD ✨
 - ⚡ **Fun fact:** Recovered alcoholic, mother of 6 amazing children, and I love learning everything! 😂😉😁👌😎😊👏📌💯
 
@@ -170,7 +173,7 @@
 
       <div style="margin: 10px 0;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-          <span style="font-weight: bold; color: #333;">Android Development</span>
+          <span style="font-weight: bold; color: #333;">📱 Android Development</span>
           <span style="color: #666;">85%</span>
         </div>
         <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
@@ -197,7 +200,7 @@
     
       <div style="margin: 10px 0;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-          <span style="font-weight: bold; color: #333;">JavaScript</span>
+          <span style="font-weight: bold; color: #333;">⚡ JavaScript</span>
           <span style="color: #666;">90%</span>
         </div>
         <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
@@ -224,7 +227,7 @@
     
       <div style="margin: 10px 0;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-          <span style="font-weight: bold; color: #333;">Node.js</span>
+          <span style="font-weight: bold; color: #333;">🟢 Node.js</span>
           <span style="color: #666;">80%</span>
         </div>
         <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
@@ -251,7 +254,7 @@
     
       <div style="margin: 10px 0;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-          <span style="font-weight: bold; color: #333;">DevOps</span>
+          <span style="font-weight: bold; color: #333;">🔧 DevOps</span>
           <span style="color: #666;">75%</span>
         </div>
         <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
@@ -278,7 +281,7 @@
     
       <div style="margin: 10px 0;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-          <span style="font-weight: bold; color: #333;">Faith & Spirituality</span>
+          <span style="font-weight: bold; color: #333;">🙏 Faith & Spirituality</span>
           <span style="color: #666;">100%</span>
         </div>
         <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
@@ -323,51 +326,51 @@
         <g transform="translate(60, 10)">
           
         <rect x="0" y="0" width="18" height="18" 
-              fill="rgba(76, 175, 80, 0.19)" 
+              fill="rgba(76, 175, 80, 0.1)" 
               stroke="#e1e4e8" 
               stroke-width="1"
               rx="3">
-          <title>1 contributions on day 1</title>
+          <title>0 contributions on day 1</title>
         </rect>
       
         <rect x="20" y="0" width="18" height="18" 
+              fill="rgba(76, 175, 80, 0.73)" 
+              stroke="#e1e4e8" 
+              stroke-width="1"
+              rx="3">
+          <title>7 contributions on day 2</title>
+        </rect>
+      
+        <rect x="40" y="0" width="18" height="18" 
+              fill="rgba(76, 175, 80, 0.37)" 
+              stroke="#e1e4e8" 
+              stroke-width="1"
+              rx="3">
+          <title>3 contributions on day 3</title>
+        </rect>
+      
+        <rect x="60" y="0" width="18" height="18" 
+              fill="rgba(76, 175, 80, 0.1)" 
+              stroke="#e1e4e8" 
+              stroke-width="1"
+              rx="3">
+          <title>0 contributions on day 4</title>
+        </rect>
+      
+        <rect x="80" y="0" width="18" height="18" 
+              fill="rgba(76, 175, 80, 0.8200000000000001)" 
+              stroke="#e1e4e8" 
+              stroke-width="1"
+              rx="3">
+          <title>8 contributions on day 5</title>
+        </rect>
+      
+        <rect x="100" y="0" width="18" height="18" 
               fill="rgba(76, 175, 80, 0.19)" 
               stroke="#e1e4e8" 
               stroke-width="1"
               rx="3">
-          <title>1 contributions on day 2</title>
-        </rect>
-      
-        <rect x="40" y="0" width="18" height="18" 
-              fill="rgba(76, 175, 80, 0.55)" 
-              stroke="#e1e4e8" 
-              stroke-width="1"
-              rx="3">
-          <title>5 contributions on day 3</title>
-        </rect>
-      
-        <rect x="60" y="0" width="18" height="18" 
-              fill="rgba(76, 175, 80, 0.64)" 
-              stroke="#e1e4e8" 
-              stroke-width="1"
-              rx="3">
-          <title>6 contributions on day 4</title>
-        </rect>
-      
-        <rect x="80" y="0" width="18" height="18" 
-              fill="rgba(76, 175, 80, 0.55)" 
-              stroke="#e1e4e8" 
-              stroke-width="1"
-              rx="3">
-          <title>5 contributions on day 5</title>
-        </rect>
-      
-        <rect x="100" y="0" width="18" height="18" 
-              fill="rgba(76, 175, 80, 0.91)" 
-              stroke="#e1e4e8" 
-              stroke-width="1"
-              rx="3">
-          <title>9 contributions on day 6</title>
+          <title>1 contributions on day 6</title>
         </rect>
       
         <rect x="120" y="0" width="18" height="18" 
@@ -382,7 +385,7 @@
       </svg>
     
 
-**Total Repositories:** 0 | **Updated:** July 15th 2025, 12:03:11 pm UTC
+**Total Repositories:** 0 | **Updated:** July 15th 2025, 12:06:31 pm UTC
 
 ## 🚀 Featured Projects
 
@@ -430,13 +433,13 @@
 
 <div align="center">
 
-**Current Mood:** 💻 Productive | **Coding Status:** 🔥 In the zone
+**Current Mood:** 🔥 Motivated | **Coding Status:** 💻 Active
 
-Last updated: **Tuesday, July 15th 2025 at 12:03:11 pm** 💻
+Last updated: **Tuesday, July 15th 2025 at 12:06:31 pm** 🚀
 
 ---
 
-<img src="https://github.com/Divinedevops87/Divinedevops87/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
+<img src="https://github.com/Divinedevops87/Divinedevops87/raw/main/assets/github-contribution-grid-snake.svg" alt="Snake animation" />
 
 *✨ This README is automatically updated every day with fresh content and animations! ✨*
 
